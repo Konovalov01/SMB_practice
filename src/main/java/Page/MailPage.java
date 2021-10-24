@@ -1,5 +1,6 @@
 package Page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,33 +12,59 @@ public class MailPage extends BasePage{
     public MailPage(WebDriver driver){
         PageFactory.initElements(driver, this);
         this.driver = driver;
+        driver.get("https://mail.yandex.ru/");
     }
-
-//    private String xpath1 = "//span[@title='Simbirsoft theme.']";
-
     @FindBy(xpath = "//div[@class='mail-ComposeButton-Wrap js-compose-button-container']")
-    private WebElement pip;
+    private WebElement newLetterButton;
+    @FindBy(xpath = "//div[@class = 'composeYabbles']")
+    private WebElement mailAdressInput;
+    @FindBy(xpath = "//input[@name='subject']")
+    private WebElement topicInput;
+    @FindBy(xpath = "//div[@class='cke_wysiwyg_div cke_reset cke_enable_context_menu cke_editable cke_editable_themed cke_contents_ltr cke_htmlplaceholder']")
+    private WebElement mailTextInput;
+    @FindBy(xpath = "//button[@class='Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l']")
+    private WebElement sendButton;
+    @FindBy(xpath = "//span[@class='mail-ComposeButton-Refresh js-main-action-refresh ns-action']")
+    private WebElement updateButton;
 
+    private int mailCount = 0;
+    protected final static String
+            mailAdress = "K4r4bast@yandex.ru",
+            topic = "Simbirsoft theme.";
 
     public MailPage lettersSeach() throws InterruptedException {
+        Thread.sleep(1000);
+        mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
+        System.out.println(mailCount);
+        return this;
+    }
 
-        Thread.sleep(5000);
+    public MailPage writeLetter() throws InterruptedException {
 
-        pip.click();
+        newLetterButton.click();
 
-//        int puper = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
-//        System.out.println(puper);
+        Thread.sleep(1000);
 
-//        ArrayList<WebElement> list = new ArrayList <WebElement>();
-//        list = (ArrayList<WebElement>) driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']"));
-//        puper = list.size();
-//        System.out.println(puper);
+        mailAdressInput.click();
+        mailAdressInput.sendKeys(mailAdress);
 
-//        System.out.println(driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size());
-//        mailText.click();
+        topicInput.click();
+        topicInput.sendKeys(topic);
 
+        String mailText = "Найдено " + mailCount + " писем/ьма .";
+
+        mailTextInput.click();
+        mailTextInput.sendKeys(mailText);
+
+        sendButton.click();
+
+        Thread.sleep(1000);
+
+        driver.navigate().refresh();
 
         return this;
     }
+
+
 
 }
