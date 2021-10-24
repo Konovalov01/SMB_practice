@@ -39,12 +39,14 @@ public class FirstTest {
                 .lettersSeach()
                 .writeLetter();
 
+        assertEquals("The number of letters has not increased  ", mailPage.testCheck(), true);
+
     }
 
     @After
     public void closeTest() throws InterruptedException {
-        Thread.sleep(5000);
-        //driver.quit();
+        Thread.sleep(2000);
+        driver.quit();
         System.out.println("Test finish");
     }
 }

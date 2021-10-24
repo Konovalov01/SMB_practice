@@ -20,7 +20,7 @@ public class YandexPage extends BasePage{
     private WebElement mailText;
 
     public YandexPage clickEnter() throws InterruptedException {
-        Thread.sleep(500);
+        Thread.sleep(1000);
         enterButton.click();
         return this;
     }

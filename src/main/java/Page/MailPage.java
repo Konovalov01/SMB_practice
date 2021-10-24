@@ -43,7 +43,7 @@ public class MailPage extends BasePage{
 
         newLetterButton.click();
 
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         mailAdressInput.click();
         mailAdressInput.sendKeys(mailAdress);
@@ -65,6 +65,14 @@ public class MailPage extends BasePage{
         return this;
     }
 
-
+    public boolean testCheck() {
+        int previousValue = mailCount;
+        mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
+        if(previousValue < mailCount) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

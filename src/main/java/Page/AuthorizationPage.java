@@ -21,13 +21,13 @@ public class AuthorizationPage extends BasePage{
     private WebElement passwordInput;
 
     public AuthorizationPage usernameEnter() throws InterruptedException {
-        Thread.sleep(700);
+        Thread.sleep(1000);
         usernameInput.click();
         usernameInput.sendKeys(login, Keys.ENTER);
         return this;
     }
     public AuthorizationPage passwordEnter() throws InterruptedException {
-        Thread.sleep(700);
+        Thread.sleep(1000);
         passwordInput.click();
         passwordInput.sendKeys(password, Keys.ENTER);
         return this;
