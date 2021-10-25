@@ -35,7 +35,6 @@ public class MailPage extends BasePage{
     public MailPage lettersSeach() throws InterruptedException {
         Thread.sleep(1000);
         mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
-        System.out.println(mailCount);
         return this;
     }
 
@@ -60,12 +59,15 @@ public class MailPage extends BasePage{
 
         Thread.sleep(1000);
 
-        driver.navigate().refresh();
+        //driver.navigate().refresh();
+        driver.get("https://mail.yandex.ru/");
+        Thread.sleep(1000);
 
         return this;
     }
 
-    public boolean testCheck() {
+    public boolean testCheck() throws InterruptedException {
+
         int previousValue = mailCount;
         mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
         if(previousValue < mailCount) {
