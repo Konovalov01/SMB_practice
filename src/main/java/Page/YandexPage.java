@@ -24,10 +24,4 @@ public class YandexPage extends BasePage{
         enterButton.click();
         return this;
     }
-
-    public YandexPage clickMail() throws InterruptedException {
-        Thread.sleep(2000);
-        mailText.click();
-        return this;
-    }
 }

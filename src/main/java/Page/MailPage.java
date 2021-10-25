@@ -28,6 +28,7 @@ public class MailPage extends BasePage{
     private WebElement updateButton;
 
     private int mailCount = 0;
+
     protected final static String
             mailAdress = "K4r4bast@yandex.ru",
             topic = "Simbirsoft theme.";
@@ -57,7 +58,7 @@ public class MailPage extends BasePage{
 
         sendButton.click();
 
-        Thread.sleep(1000);
+        Thread.sleep(500);
 
         //driver.navigate().refresh();
         driver.get("https://mail.yandex.ru/");
