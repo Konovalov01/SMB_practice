@@ -24,6 +24,7 @@ public class FirstTest {
     public static final String PathToProperties = "src/main/resources/Properties/AuthorizationData.properties";
     private String loginToSite;
     private String passwordToSite;
+    private FileInputStream fileInputStream;
 
     @Before
     public void setUp() throws IOException {
@@ -31,19 +32,16 @@ public class FirstTest {
         System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
 
-        FileInputStream fileInputStream;
         Properties authorizationProp = new Properties();
         fileInputStream = new FileInputStream(PathToProperties);
         authorizationProp.load(fileInputStream);
+
         loginToSite = authorizationProp.getProperty("login");
         passwordToSite = authorizationProp.getProperty("password");
     }
 
     @Test
     public void firstTest() throws InterruptedException {
-
-        System.out.println(loginToSite);
-        System.out.println(passwordToSite);
 
         MailPage mailPage =new YandexPage(driver)
                 .clickEnter()
@@ -56,7 +54,7 @@ public class FirstTest {
     }
 
     @After
-    public void closeTest() throws InterruptedException {
+    public void closeTest(){
         driver.quit();
     }
 }

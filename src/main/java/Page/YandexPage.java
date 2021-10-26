@@ -6,7 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class YandexPage extends BasePage{
+public class YandexPage{
+    public WebDriver driver;
 
     public YandexPage(WebDriver driver){
         PageFactory.initElements(driver, this);
