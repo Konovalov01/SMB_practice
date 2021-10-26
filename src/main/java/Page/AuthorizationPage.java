@@ -12,21 +12,17 @@ public class AuthorizationPage extends BasePage{
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
-    private String login = "k4r4bast";
-    private String password = "karabast123";
 
     @FindBy(xpath = "//input[@id='passp-field-login']")
     private WebElement usernameInput;
     @FindBy(xpath = "//input[@id='passp-field-passwd']")
     private WebElement passwordInput;
 
-    public AuthorizationPage usernameEnter() throws InterruptedException {
+    public MailPage authorization(String login,String password) throws InterruptedException {
         Thread.sleep(1000);
         usernameInput.click();
         usernameInput.sendKeys(login, Keys.ENTER);
-        return this;
-    }
-    public MailPage passwordEnter() throws InterruptedException {
+
         Thread.sleep(1000);
         passwordInput.click();
         passwordInput.sendKeys(password, Keys.ENTER);

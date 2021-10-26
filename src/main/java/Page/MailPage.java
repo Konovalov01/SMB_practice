@@ -28,6 +28,7 @@ public class MailPage extends BasePage{
     private WebElement updateButton;
 
     private int mailCount = 0;
+    private int previousValue = 0;
 
     protected final static String
             mailAdress = "K4r4bast@yandex.ru",
@@ -60,7 +61,6 @@ public class MailPage extends BasePage{
 
         Thread.sleep(500);
 
-        //driver.navigate().refresh();
         driver.get("https://mail.yandex.ru/");
         Thread.sleep(1000);
 
@@ -69,13 +69,8 @@ public class MailPage extends BasePage{
 
     public boolean testCheck() throws InterruptedException {
 
-        int previousValue = mailCount;
+        previousValue = mailCount;
         mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
-//        if(previousValue < mailCount) {
-//            return true;
-//        } else {
-//            return false;
-//        }
         return previousValue < mailCount;
     }
 

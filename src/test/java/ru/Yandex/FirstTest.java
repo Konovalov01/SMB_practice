@@ -11,36 +11,45 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FirstTest {
     public static WebDriver driver;
+    public static final String PathToProperties = "src/main/resources/Properties/AuthorizationData.properties";
+    private String loginToSite;
+    private String passwordToSite;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
+
         System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
+
+        FileInputStream fileInputStream;
+        Properties authorizationProp = new Properties();
+        fileInputStream = new FileInputStream(PathToProperties);
+        authorizationProp.load(fileInputStream);
+        loginToSite = authorizationProp.getProperty("login");
+        passwordToSite = authorizationProp.getProperty("password");
     }
 
     @Test
     public void firstTest() throws InterruptedException {
 
-//        new YandexPage(driver)
-//                .clickEnter();
+        System.out.println(loginToSite);
+        System.out.println(passwordToSite);
 
         MailPage mailPage =new YandexPage(driver)
                 .clickEnter()
-                .usernameEnter()
-                .passwordEnter()
+                .authorization(loginToSite,passwordToSite)
                 .lettersSeach()
                 .writeLetter();
-
-//        Thread.sleep(1000);
-
-//        MailPage mailPage = new MailPage(driver)
-//                .lettersSeach()
-//                .writeLetter();
 
         assertTrue("The number of letters has not increased", mailPage.testCheck());
 
@@ -48,7 +57,6 @@ public class FirstTest {
 
     @After
     public void closeTest() throws InterruptedException {
-        Thread.sleep(2000);
         driver.quit();
     }
 }
