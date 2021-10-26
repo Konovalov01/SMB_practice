@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FirstTest {
     public static WebDriver driver;
@@ -20,26 +21,28 @@ public class FirstTest {
     public void setUp() {
         System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
-        System.out.println("Test start");
     }
 
     @Test
     public void firstTest() throws InterruptedException {
 
-        YandexPage yandexPage = new YandexPage(driver)
-                .clickEnter();
+//        new YandexPage(driver)
+//                .clickEnter();
 
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver)
+        MailPage mailPage =new YandexPage(driver)
+                .clickEnter()
                 .usernameEnter()
-                .passwordEnter();
-
-        Thread.sleep(1000);
-
-        MailPage mailPage = new MailPage(driver)
+                .passwordEnter()
                 .lettersSeach()
                 .writeLetter();
 
-        assertEquals("The number of letters has not increased  ", mailPage.testCheck(), true);
+//        Thread.sleep(1000);
+
+//        MailPage mailPage = new MailPage(driver)
+//                .lettersSeach()
+//                .writeLetter();
+
+        assertTrue("The number of letters has not increased", mailPage.testCheck());
 
     }
 
@@ -47,6 +50,5 @@ public class FirstTest {
     public void closeTest() throws InterruptedException {
         Thread.sleep(2000);
         driver.quit();
-        System.out.println("Test finish");
     }
 }

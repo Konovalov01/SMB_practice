@@ -34,7 +34,7 @@ public class MailPage extends BasePage{
             topic = "Simbirsoft theme.";
 
     public MailPage lettersSeach() throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
         return this;
     }
@@ -71,11 +71,12 @@ public class MailPage extends BasePage{
 
         int previousValue = mailCount;
         mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
-        if(previousValue < mailCount) {
-            return true;
-        } else {
-            return false;
-        }
+//        if(previousValue < mailCount) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        return previousValue < mailCount;
     }
 
 }

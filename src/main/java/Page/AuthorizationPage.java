@@ -26,11 +26,12 @@ public class AuthorizationPage extends BasePage{
         usernameInput.sendKeys(login, Keys.ENTER);
         return this;
     }
-    public AuthorizationPage passwordEnter() throws InterruptedException {
+    public MailPage passwordEnter() throws InterruptedException {
         Thread.sleep(1000);
         passwordInput.click();
         passwordInput.sendKeys(password, Keys.ENTER);
-        return this;
+        Thread.sleep(1000);
+        return new MailPage(driver);
     }
 
 }

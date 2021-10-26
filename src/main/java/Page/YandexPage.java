@@ -19,9 +19,9 @@ public class YandexPage extends BasePage{
     @FindBy(xpath = "//div[@class='desk-notif-card__mail-title']")
     private WebElement mailText;
 
-    public YandexPage clickEnter() throws InterruptedException {
+    public AuthorizationPage clickEnter() throws InterruptedException {
         Thread.sleep(1000);
         enterButton.click();
-        return this;
+        return new AuthorizationPage(driver);
     }
 }
