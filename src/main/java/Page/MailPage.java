@@ -15,18 +15,17 @@ public class MailPage{
         this.driver = driver;
         driver.get("https://mail.yandex.ru/");
     }
-    @FindBy(xpath = "//div[@class='mail-ComposeButton-Wrap js-compose-button-container']")
+
+    @FindBy(css = "a[title^='Написать']")
     private WebElement newLetterButton;
-    @FindBy(xpath = "//div[@class = 'composeYabbles']")
+    @FindBy(css = "div[class = 'composeYabbles']")
     private WebElement mailAdressInput;
-    @FindBy(xpath = "//input[@name='subject']")
+    @FindBy(css = "input[name='subject']")
     private WebElement topicInput;
-    @FindBy(xpath = "//div[@class='cke_wysiwyg_div cke_reset cke_enable_context_menu cke_editable cke_editable_themed cke_contents_ltr cke_htmlplaceholder']")
+    @FindBy(css = "div[class^='cke_wysiwyg']")
     private WebElement mailTextInput;
-    @FindBy(xpath = "//button[@class='Button2 Button2_pin_circle-circle Button2_view_default Button2_size_l']")
+    @FindBy(css = "button[class^='Button2 Button2_pin_circle-circle Button2_view_d']")
     private WebElement sendButton;
-    @FindBy(xpath = "//span[@class='mail-ComposeButton-Refresh js-main-action-refresh ns-action']")
-    private WebElement updateButton;
 
     private int mailCount = 0;
     private int previousValue = 0;
@@ -37,7 +36,7 @@ public class MailPage{
 
     public MailPage lettersSeach() throws InterruptedException {
         Thread.sleep(2000);
-        mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
+        mailCount = driver.findElements(By.cssSelector("span[title='Simbirsoft theme.']")).size();
         return this;
     }
 
@@ -57,10 +56,10 @@ public class MailPage{
 
         mailTextInput.click();
         mailTextInput.sendKeys(mailText);
-
+        Thread.sleep(500);
         sendButton.click();
 
-        Thread.sleep(500);
+        Thread.sleep(2000);
 
         driver.get("https://mail.yandex.ru/");
         Thread.sleep(1000);
@@ -71,7 +70,8 @@ public class MailPage{
     public boolean testCheck() throws InterruptedException {
 
         previousValue = mailCount;
-        mailCount = driver.findElements(By.xpath("//span[@title='Simbirsoft theme.']")).size();
+        mailCount = driver.findElements(By.cssSelector("span[title='Simbirsoft theme.']")).size();
+        Thread.sleep(1000);
         return previousValue < mailCount;
     }
 

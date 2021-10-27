@@ -14,9 +14,10 @@ public class AuthorizationPage{
         this.driver = driver;
     }
 
-    @FindBy(xpath = "//input[@id='passp-field-login']")
+    @FindBy(id = "passp-field-login")
     private WebElement usernameInput;
-    @FindBy(xpath = "//input[@id='passp-field-passwd']")
+    //@FindBy(xpath = "//input[@id='passp-field-passwd']")
+    @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
     public MailPage authorization(String login,String password) throws InterruptedException {
