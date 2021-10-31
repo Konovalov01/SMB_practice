@@ -5,31 +5,34 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-public class AuthorizationPage{
-    public WebDriver driver;
+import java.util.concurrent.TimeUnit;
+
+public class AuthorizationPage extends BasePage{
 
     public AuthorizationPage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
         this.driver = driver;
     }
 
+    private String searchButtonSelector = "button[class^='button m']";
+
     @FindBy(id = "passp-field-login")
     private WebElement usernameInput;
-    //@FindBy(xpath = "//input[@id='passp-field-passwd']")
     @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
-    public MailPage authorization(String login,String password) throws InterruptedException {
-        Thread.sleep(1000);
+    public MailPage authorization(String login,String password, String mailLink) throws InterruptedException {
         usernameInput.click();
         usernameInput.sendKeys(login, Keys.ENTER);
 
-        Thread.sleep(1000);
         passwordInput.click();
-        passwordInput.sendKeys(password, Keys.ENTER);
-        Thread.sleep(1000);
-        return new MailPage(driver);
+        passwordInput.sendKeys(password, Keys.ENTER);//добавить нажатие на кнопку
+
+        this.waitForElementByCss(searchButtonSelector);
+
+        return new MailPage(driver,mailLink);
     }
 
 }

@@ -5,24 +5,27 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class YandexPage{
-    public WebDriver driver;
+import java.util.concurrent.TimeUnit;
 
-    public YandexPage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+public class YandexPage extends BasePage{
+
+    public YandexPage(WebDriver driver,String link){
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
         this.driver = driver;
-        driver.get("https://yandex.ru/");
+        driver.get(link);
     }
 
-    //@FindBy(xpath = "//div[@class='desk-notif-card__login-new-item-title']")
+    private String enterButtonSelector = "a[class^='home-link desk-notif-card__login']";
     @FindBy(css = "a[class^='home-link desk-notif-card__login']")
     private WebElement enterButton;
 
     public AuthorizationPage clickEnter() throws InterruptedException {
-        Thread.sleep(1000);
+        this.waitForElementByCss(enterButtonSelector);
         enterButton.click();
         return new AuthorizationPage(driver);
     }
+
 }

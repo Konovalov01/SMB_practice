@@ -6,14 +6,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class MailPage{
-    public WebDriver driver;
+public class MailPage extends BasePage{
 
-    public MailPage(WebDriver driver){
-        PageFactory.initElements(driver, this);
+    public MailPage(WebDriver driver, String mailLink){
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
         this.driver = driver;
-        driver.get("https://mail.yandex.ru/");
+        driver.get(mailLink);
     }
 
     @FindBy(css = "a[title^='Написать']")
@@ -30,21 +32,20 @@ public class MailPage{
     private int mailCount = 0;
     private int previousValue = 0;
 
+
     protected final static String
-            mailAdress = "K4r4bast@yandex.ru",
-            topic = "Simbirsoft theme.";
+            topicMailSelector = "span[title='Simbirsoft theme.']",
+            sendConfimSelector ="div[class = 'ComposeDoneScreen-Title']";
 
     public MailPage lettersSeach() throws InterruptedException {
-        Thread.sleep(2000);
-        mailCount = driver.findElements(By.cssSelector("span[title='Simbirsoft theme.']")).size();
+        this.waitForElementByCss(topicMailSelector);
+        mailCount = driver.findElements(By.cssSelector(topicMailSelector)).size();
         return this;
     }
 
-    public MailPage writeLetter() throws InterruptedException {
+    public MailPage writeLetter(String mailLink,String mailAdress, String topic) throws InterruptedException {
 
         newLetterButton.click();
-
-        Thread.sleep(2000);
 
         mailAdressInput.click();
         mailAdressInput.sendKeys(mailAdress);
@@ -56,22 +57,20 @@ public class MailPage{
 
         mailTextInput.click();
         mailTextInput.sendKeys(mailText);
-        Thread.sleep(500);
         sendButton.click();
 
-        Thread.sleep(2000);
+        this.waitForElementByCss(sendConfimSelector);
 
-        driver.get("https://mail.yandex.ru/");
-        Thread.sleep(1000);
-
+        driver.get(mailLink);
         return this;
     }
 
     public boolean testCheck() throws InterruptedException {
-
         previousValue = mailCount;
-        mailCount = driver.findElements(By.cssSelector("span[title='Simbirsoft theme.']")).size();
-        Thread.sleep(1000);
+
+        this.waitForElementByCss(topicMailSelector);
+        mailCount = driver.findElements(By.cssSelector(topicMailSelector)).size();
+
         return previousValue < mailCount;
     }
 

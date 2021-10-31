@@ -22,8 +22,12 @@ import static org.junit.Assert.assertTrue;
 public class FirstTest {
     public static WebDriver driver;
     public static final String PathToProperties = "src/main/resources/Properties/AuthorizationData.properties";
-    private String loginToSite;
-    private String passwordToSite;
+    private String loginToSite,
+            passwordToSite,
+            startLink,
+            mailLink,
+            mailAdress,
+            topic;
     private FileInputStream fileInputStream;
 
     @Before
@@ -38,16 +42,20 @@ public class FirstTest {
 
         loginToSite = authorizationProp.getProperty("login");
         passwordToSite = authorizationProp.getProperty("password");
+        startLink = authorizationProp.getProperty("startLink");
+        mailLink = authorizationProp.getProperty("mailLink");
+        mailAdress = authorizationProp.getProperty("mailAdress");
+        topic = authorizationProp.getProperty("topic");
     }
 
     @Test
     public void firstTest() throws InterruptedException {
 
-        MailPage mailPage =new YandexPage(driver)
+        MailPage mailPage =new YandexPage(driver,startLink)
                 .clickEnter()
-                .authorization(loginToSite,passwordToSite)
+                .authorization(loginToSite,passwordToSite,mailLink)
                 .lettersSeach()
-                .writeLetter();
+                .writeLetter(mailLink,mailAdress,topic);
 
         assertTrue("The number of letters has not increased", mailPage.testCheck());
 
