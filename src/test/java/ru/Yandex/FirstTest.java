@@ -1,52 +1,48 @@
 package ru.Yandex;
-import Page.AuthorizationPage;
-import Page.MailPage;
-import Page.YandexPage;
+import page.MailPage;
+import page.YandexPage;
+import data.UserProperties;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class FirstTest {
     public static WebDriver driver;
+    public static UserProperties properties;
+
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
-        System.out.println("Test start");
+        properties = new UserProperties();
     }
 
     @Test
     public void firstTest() throws InterruptedException {
-
-        YandexPage yandexPage = new YandexPage(driver)
-                .clickEnter();
-
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver)
-                .usernameEnter()
-                .passwordEnter();
-
-        Thread.sleep(1000);
-
-        MailPage mailPage = new MailPage(driver)
+        MailPage mailPage = new YandexPage(driver)
+                .goToStartLink(properties.getStartLink())
+                .clickEnter()
+                .authorization(
+                        properties.getLogin(),properties.getPassword())
+                .clickMailButton()
                 .lettersSeach()
-                .writeLetter();
+                .writeLetter(properties.getMailLink(),properties.getMailAdress(),properties.getTopic());
 
-        assertEquals("The number of letters has not increased  ", mailPage.testCheck(), true);
+        assertTrue("The number of letters has not increased", mailPage.testCheck());
 
     }
 
     @After
-    public void closeTest() throws InterruptedException {
-        Thread.sleep(2000);
+    public void closeTest(){
         driver.quit();
-        System.out.println("Test finish");
     }
 }
