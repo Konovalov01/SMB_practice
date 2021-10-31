@@ -1,7 +1,7 @@
 package ru.Yandex;
-import Page.MailPage;
-import Page.YandexPage;
-import Data.UserProperties;
+import page.MailPage;
+import page.YandexPage;
+import data.UserProperties;
 
 import org.junit.After;
 import org.junit.Before;
