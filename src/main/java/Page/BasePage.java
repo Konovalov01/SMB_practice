@@ -13,4 +13,10 @@ public class BasePage {
         WebDriverWait wait = new WebDriverWait(driver, 15);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
     }
+
+    public void goToLastTab(){
+        for (String tab : driver.getWindowHandles()) {
+            driver.switchTo().window(tab);
+        }
+    }
 }

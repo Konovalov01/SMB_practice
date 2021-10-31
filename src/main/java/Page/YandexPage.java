@@ -26,6 +26,7 @@ public class YandexPage extends BasePage{
     @FindBy(css = "a[class^='home-link desk-notif-card__login']")
     private WebElement enterButton;
 
+    private String mailButtonSelector = "a[class^='home-link desk-notif-card__d']";
     @FindBy(css = "a[class^='home-link desk-notif-card__d']")
     private WebElement mailButton;
 
@@ -36,12 +37,9 @@ public class YandexPage extends BasePage{
     }
 
     public MailPage clickMailButton(){
+        this.waitForElementByCss(mailButtonSelector);
         mailButton.click();
-
-        for (String tab : driver.getWindowHandles()) {
-            driver.switchTo().window(tab);
-        }
-
+        this.goToLastTab();
         return new MailPage(driver);
     }
 }

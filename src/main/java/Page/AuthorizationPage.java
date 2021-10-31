@@ -28,9 +28,7 @@ public class AuthorizationPage extends BasePage{
         usernameInput.sendKeys(login, Keys.ENTER);
 
         passwordInput.click();
-        passwordInput.sendKeys(password, Keys.ENTER);//добавить нажатие на кнопку
-
-        this.waitForElementByCss(searchButtonSelector);
+        passwordInput.sendKeys(password, Keys.ENTER);
 
         return new YandexPage(driver);
     }
