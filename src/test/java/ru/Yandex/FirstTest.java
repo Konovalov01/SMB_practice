@@ -1,61 +1,41 @@
 package ru.Yandex;
-import Page.AuthorizationPage;
 import Page.MailPage;
 import Page.YandexPage;
+import Data.UserProperties;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FirstTest {
     public static WebDriver driver;
-    public static final String PathToProperties = "src/main/resources/Properties/AuthorizationData.properties";
-    private String loginToSite,
-            passwordToSite,
-            startLink,
-            mailLink,
-            mailAdress,
-            topic;
-    private FileInputStream fileInputStream;
+    public static UserProperties properties;
+
 
     @Before
     public void setUp() throws IOException {
-
         System.setProperty("webdriver.chrome.driver","src/main/resources/drivers/chromedriver.exe");
         driver = new ChromeDriver();
-
-        Properties authorizationProp = new Properties();
-        fileInputStream = new FileInputStream(PathToProperties);
-        authorizationProp.load(fileInputStream);
-
-        loginToSite = authorizationProp.getProperty("login");
-        passwordToSite = authorizationProp.getProperty("password");
-        startLink = authorizationProp.getProperty("startLink");
-        mailLink = authorizationProp.getProperty("mailLink");
-        mailAdress = authorizationProp.getProperty("mailAdress");
-        topic = authorizationProp.getProperty("topic");
+        properties = new UserProperties();
     }
 
     @Test
     public void firstTest() throws InterruptedException {
-
-        MailPage mailPage =new YandexPage(driver,startLink)
+        MailPage mailPage = new YandexPage(driver)
+                .goToStartLink(properties.getStartLink())
                 .clickEnter()
-                .authorization(loginToSite,passwordToSite,mailLink)
+                .authorization(
+                        properties.getLogin(),properties.getPassword(),properties.getStartLink())
+                .clickMailButton()
                 .lettersSeach()
-                .writeLetter(mailLink,mailAdress,topic);
+                .writeLetter(properties.getMailLink(),properties.getMailAdress(),properties.getTopic());
 
         assertTrue("The number of letters has not increased", mailPage.testCheck());
 

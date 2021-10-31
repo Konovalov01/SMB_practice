@@ -12,10 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MailPage extends BasePage{
 
-    public MailPage(WebDriver driver, String mailLink){
+    public MailPage(WebDriver driver){
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
         this.driver = driver;
-        driver.get(mailLink);
     }
 
     @FindBy(css = "a[title^='Написать']")
@@ -33,7 +32,7 @@ public class MailPage extends BasePage{
     private int previousValue = 0;
 
 
-    protected final static String
+    private final String
             topicMailSelector = "span[title='Simbirsoft theme.']",
             sendConfimSelector ="div[class = 'ComposeDoneScreen-Title']";
 

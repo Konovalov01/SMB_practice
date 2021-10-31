@@ -23,7 +23,7 @@ public class AuthorizationPage extends BasePage{
     @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
-    public MailPage authorization(String login,String password, String mailLink) throws InterruptedException {
+    public YandexPage authorization(String login,String password, String startLink) throws InterruptedException {
         usernameInput.click();
         usernameInput.sendKeys(login, Keys.ENTER);
 
@@ -32,7 +32,7 @@ public class AuthorizationPage extends BasePage{
 
         this.waitForElementByCss(searchButtonSelector);
 
-        return new MailPage(driver,mailLink);
+        return new YandexPage(driver);
     }
 
 }

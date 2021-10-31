@@ -12,15 +12,22 @@ import java.util.concurrent.TimeUnit;
 
 public class YandexPage extends BasePage{
 
-    public YandexPage(WebDriver driver,String link){
+    public YandexPage(WebDriver driver){
         PageFactory.initElements(new AjaxElementLocatorFactory(driver,5), this);
         this.driver = driver;
+    }
+
+    public YandexPage goToStartLink(String link) {
         driver.get(link);
+        return this;
     }
 
     private String enterButtonSelector = "a[class^='home-link desk-notif-card__login']";
     @FindBy(css = "a[class^='home-link desk-notif-card__login']")
     private WebElement enterButton;
+
+    @FindBy(css = "a[class^='home-link desk-notif-card__d']")
+    private WebElement mailButton;
 
     public AuthorizationPage clickEnter() throws InterruptedException {
         this.waitForElementByCss(enterButtonSelector);
@@ -28,4 +35,13 @@ public class YandexPage extends BasePage{
         return new AuthorizationPage(driver);
     }
 
+    public MailPage clickMailButton(){
+        mailButton.click();
+
+        for (String tab : driver.getWindowHandles()) {
+            driver.switchTo().window(tab);
+        }
+
+        return new MailPage(driver);
+    }
 }
