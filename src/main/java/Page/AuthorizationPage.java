@@ -23,7 +23,7 @@ public class AuthorizationPage extends BasePage{
     @FindBy(id = "passp-field-passwd")
     private WebElement passwordInput;
 
-    public YandexPage authorization(String login,String password, String startLink) throws InterruptedException {
+    public YandexPage authorization(String login,String password) throws InterruptedException {
         usernameInput.click();
         usernameInput.sendKeys(login, Keys.ENTER);
 

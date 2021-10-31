@@ -32,7 +32,7 @@ public class FirstTest {
                 .goToStartLink(properties.getStartLink())
                 .clickEnter()
                 .authorization(
-                        properties.getLogin(),properties.getPassword(),properties.getStartLink())
+                        properties.getLogin(),properties.getPassword())
                 .clickMailButton()
                 .lettersSeach()
                 .writeLetter(properties.getMailLink(),properties.getMailAdress(),properties.getTopic());
