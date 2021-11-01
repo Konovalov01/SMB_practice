@@ -14,7 +14,7 @@ public class MailPage extends BasePage{
         this.driver = driver;
     }
 
-    @FindBy(css = "a[title^='Написать']")
+    @FindBy(css = "a[class^='mail-C']")
     private WebElement newLetterButton;
     @FindBy(css = "div[class = 'composeYabbles']")
     private WebElement mailAdressInput;
