@@ -49,7 +49,7 @@ public class MailPage extends BasePage{
         topicInput.click();
         topicInput.sendKeys(topic);
 
-        String mailText = "Найдено " + mailCount + " писем/ьма .";
+        String mailText = mailCount + " emails found .";
 
         mailTextInput.click();
         mailTextInput.sendKeys(mailText);
