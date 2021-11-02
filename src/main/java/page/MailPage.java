@@ -14,7 +14,7 @@ public class MailPage extends BasePage{
         this.driver = driver;
     }
 
-    @FindBy(css = "a[title^='Написать']")
+    @FindBy(css = "a[class^='mail-C']")
     private WebElement newLetterButton;
     @FindBy(css = "div[class = 'composeYabbles']")
     private WebElement mailAdressInput;
@@ -49,7 +49,7 @@ public class MailPage extends BasePage{
         topicInput.click();
         topicInput.sendKeys(topic);
 
-        String mailText = "Найдено " + mailCount + " писем/ьма .";
+        String mailText = mailCount + " emails found .";
 
         mailTextInput.click();
         mailTextInput.sendKeys(mailText);
